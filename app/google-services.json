@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "462619285800",
+    "firebase_url": "https://careasy-53d76.firebaseio.com",
+    "project_id": "careasy-53d76",
+    "storage_bucket": "careasy-53d76.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462619285800:android:a16f6b2cea3c7fa6",
+        "android_client_info": {
+          "package_name": "com.carona.careasy.careasy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462619285800-2ca1rko3okbao9trraq19fq80smb5clj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.carona.careasy.careasy",
+            "certificate_hash": "9a8a4280573e3dbf47d15f1dbc6e3ac657c8e269"
+          }
+        },
+        {
+          "client_id": "462619285800-j89t6okdpcjlmrle5sjjnd19b428pkab.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOAR-cXsvC88c4fszUFnYz72clCm1X54I"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462619285800-j89t6okdpcjlmrle5sjjnd19b428pkab.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
