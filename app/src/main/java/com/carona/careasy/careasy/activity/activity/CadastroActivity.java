@@ -33,6 +33,7 @@ public class CadastroActivity extends AppCompatActivity {
         campoNome  = findViewById (R.id.editCadastroNome);
       //  campoCpf   = findViewById (R.id.editCadastroCPF);
         campoEmail = findViewById (R.id.editCadastroEmail);
+        campoSenha = findViewById(R.id.editCadastroSenha);
         switchTipoUsuario = findViewById (R.id.switchTipoUsuario);
     }
 
@@ -93,6 +94,7 @@ public class CadastroActivity extends AppCompatActivity {
         });
 
     }
+
 
     public String verificaTipoUsuario(){
         return switchTipoUsuario.isChecked() ? "M" : "P" ;
