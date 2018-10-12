@@ -1,25 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     //Titulos Activity...
     <string name="app_name">CarEasy</string>
     <string name="titulo_maps">Map</string>
     <string name="titulo_cadastro">Cadastrar uma conta</string>
     <string name="titulo_login">Acessar minha conta</string>
+
     //Hint...
     <string name="hint_email">E-mail</string>
     <string name="hint_senha">Senha</string>
     <string name="hint_nome">Nome Completo</string>
     <string name="hint_CPF">CPF</string>
+
     //Botões...
     <string name="btn_entrar">Entrar</string>
     <string name="btn_cadastro">Cadastro</string>
+
     //Labels...
     <string name="lbl_passageiro">Passageiro</string>
     <string name="lbl_motorista">Motorista</string>
+
     //Toast...
-    <string name="toast_user_cadastrado">Sucesso ao Cadastrar Usuário</string>
+    <string name="toast_passageiro_cadastrado">Sucesso ao Cadastrar Passageiro</string>
+    <string name="toast_motorista_cadastrado">Sucesso ao Cadastrar Motorista</string>
     <string name="toast_nome_vazio">Preencha o Campo Nome!</string>
     <string name="toast_cpf_vazio">Preencha o Campo CPF!</string>
     <string name="toast_email_vazio">Preencha o Campo E-mail!</string>
     <string name="toast_senha_vazio">Preencha o Campo Senha!</string>
+
+    //String Exceção
+    <string name="excecao_senha">Digite uma senha mais forte!</string>
+    <string name="excecao_email">Por favor, digite um e-mail válido</string>
+    <string name="excecao_conta">Esta conta já foi cadastrada</string>
+    <string name="excecao_cadastro">Erro ao cadastrar usuário</string>
+
 </resources>
