@@ -1,5 +1,6 @@
 package com.carona.careasy.careasy.activity.activity;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
@@ -10,11 +11,15 @@ import android.widget.Toast;
 
 import com.carona.careasy.careasy.R;
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
+import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
 import com.carona.careasy.careasy.activity.model.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
 
 public class CadastroActivity extends AppCompatActivity {
@@ -72,7 +77,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    public void cadastrarUsuario( Usuario usuario ){
+    public void cadastrarUsuario(final Usuario usuario ){
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
@@ -83,7 +88,45 @@ public class CadastroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if ( task.isSuccessful() ){
-                    toast(R.string.toast_user_cadastrado);
+
+                    try {
+                        String idUsuario = task.getResult().getUser().getUid();
+                        usuario.setId(idUsuario);
+                        usuario.salvar();
+                        //Atualizar nome no UserProfile
+                        UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
+                        //Redireciona o usuário com base no seu tipo
+                        //Se o usuário for passageiro chama a activity maps
+                        //senão chama a activity requisições
+                        if ( verificaTipoUsuario() == "P"){
+                            startActivity(new Intent(CadastroActivity.this, MapsActivity.class));
+                            finish();
+                            toast(R.string.toast_passageiro_cadastrado);
+
+                        }else {
+                            startActivity(new Intent(CadastroActivity.this, RequisicoesActivity.class));
+                            finish();
+                            toast(R.string.toast_motorista_cadastrado);
+
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }else {
+                    String excecao = "";
+                    try {
+                        throw task.getException();
+                    }catch (FirebaseAuthWeakPasswordException e){
+                        excecao = getString(R.string.excecao_senha);
+                    } catch (FirebaseAuthInvalidCredentialsException e) {
+                        excecao = getString(R.string.excecao_email);
+                    } catch (FirebaseAuthUserCollisionException e) {
+                        excecao = getString(R.string.excecao_conta);
+                    } catch (Exception e) {
+                        excecao = getString(R.string.excecao_cadastro)+ e.getMessage();
+                        e.printStackTrace();
+                    }
+                    toast(excecao);
                 }
 
             }
@@ -91,12 +134,15 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-
     public String verificaTipoUsuario(){
         return switchTipoUsuario.isChecked() ? "M" : "P" ;
     }
 
     public  void toast(int string){
+        Toast.makeText(CadastroActivity.this, string, Toast.LENGTH_SHORT).show();
+    }
+
+    public  void toast(String string){
         Toast.makeText(CadastroActivity.this, string, Toast.LENGTH_SHORT).show();
     }
 }

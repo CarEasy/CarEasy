@@ -1,5 +1,11 @@
 package com.carona.careasy.careasy.activity.model;
 
+import android.provider.ContactsContract;
+
+import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Exclude;
+
 public class Usuario {
 
     private String id;
@@ -9,6 +15,13 @@ public class Usuario {
     private String tipo;
 
     public Usuario() {
+    }
+
+    public void salvar(){
+
+        DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
+        DatabaseReference usuario = firebaseRef.child("usuarios").child(getId());
+        usuario.setValue(this);
     }
 
     public String getId() {
@@ -35,6 +48,7 @@ public class Usuario {
         this.email = email;
     }
 
+    @Exclude
     public String getSenha() {
         return senha;
     }

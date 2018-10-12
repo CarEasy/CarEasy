@@ -40,16 +40,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".activity.activity.MapsActivity" />
+        <activity android:name=".activity.activity.MapsActivity" />
         <activity
             android:name=".activity.activity.LoginActivity"
             android:label="@string/titulo_login"
-            android:parentActivityName=".activity.activity.MainActivity"/>
+            android:parentActivityName=".activity.activity.MainActivity" />
         <activity
             android:name=".activity.activity.CadastroActivity"
             android:label="@string/titulo_cadastro"
-            android:parentActivityName=".activity.activity.MainActivity"></activity>
+            android:parentActivityName=".activity.activity.MainActivity" />
+        <activity android:name=".activity.activity.RequisicoesActivity"></activity>
     </application>
 
 </manifest>
