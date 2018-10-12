@@ -22,17 +22,19 @@
     <string name="lbl_motorista">Motorista</string>
 
     //Toast...
-    <string name="toast_passageiro_cadastrado">Sucesso ao Cadastrar Passageiro</string>
-    <string name="toast_motorista_cadastrado">Sucesso ao Cadastrar Motorista</string>
+    <string name="toast_passageiro_cadastrado">Sucesso ao Cadastrar Passageiro!</string>
+    <string name="toast_motorista_cadastrado">Sucesso ao Cadastrar Motorista!</string>
     <string name="toast_nome_vazio">Preencha o Campo Nome!</string>
     <string name="toast_cpf_vazio">Preencha o Campo CPF!</string>
     <string name="toast_email_vazio">Preencha o Campo E-mail!</string>
     <string name="toast_senha_vazio">Preencha o Campo Senha!</string>
 
     //String Exceção
-    <string name="excecao_senha">Digite uma senha com no minimo 6 caracteres!</string>
-    <string name="excecao_email">Por favor, digite um e-mail válido</string>
-    <string name="excecao_conta">Esta conta já foi cadastrada</string>
-    <string name="excecao_cadastro">Erro ao cadastrar usuário</string>
+    <string name="excecao_senha">Digite uma senha mais forte!</string>
+    <string name="excecao_email">Por favor, digite um e-mail válido!</string>
+    <string name="excecao_conta">Esta conta já foi cadastrada!</string>
+    <string name="excecao_cadastro">Erro ao cadastrar usuário!</string>
+    <string name="excecao_usuario">Usuário não está cadastrado!</string>
+    <string name="excecao_login_invalido">E-mail e senha não correspondem a um usuário cadastrado!</string>
 
 </resources>
