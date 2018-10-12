@@ -31,7 +31,7 @@ public class CadastroActivity extends AppCompatActivity {
 
         //INICIALIZAR COMPONENTES
         campoNome  = findViewById (R.id.editCadastroNome);
-      //  campoCpf   = findViewById (R.id.editCadastroCPF);
+        campoCpf   = findViewById (R.id.editCadastroCPF);
         campoEmail = findViewById (R.id.editCadastroEmail);
         campoSenha = findViewById(R.id.editCadastroSenha);
         switchTipoUsuario = findViewById (R.id.switchTipoUsuario);
@@ -40,27 +40,31 @@ public class CadastroActivity extends AppCompatActivity {
     public void validarCadastroUsuaario(View view){
         //Recuperar textos dos campos
         String textoNome  = campoNome.getText().toString();
-    //    String textoCpf   = campoCpf.getText().toString();
+        String textoCpf   = campoCpf.getText().toString();
         String textoEmail = campoEmail.getText().toString();
         String textoSenha = campoSenha.getText().toString();
 
         if( !textoNome.isEmpty() ) {//verifica nome
-            if( !textoEmail.isEmpty() ) {//verifica e-mail
-                if( !textoSenha.isEmpty() ) {//verifica senha
+            if( !textoCpf.isEmpty() ) {//verifica cpf
+                if( !textoEmail.isEmpty() ) {//verifica e-mail
+                    if( !textoSenha.isEmpty() ) {//verifica senha
 
-                    Usuario usuario = new Usuario();
-                    usuario.setNome( textoNome );
-                    usuario.setEmail( textoEmail );
-                    usuario.setSenha( textoSenha );
-                    usuario.setTipo( verificaTipoUsuario() );
+                        Usuario usuario = new Usuario();
+                        usuario.setNome( textoNome );
+                        usuario.setEmail( textoEmail );
+                        usuario.setSenha( textoSenha );
+                        usuario.setTipo( verificaTipoUsuario() );
 
-                    cadastrarUsuario( usuario );
+                        cadastrarUsuario( usuario );
 
+                    }else {
+                        toast(R.string.toast_senha_vazio);
+                    }
                 }else {
-                    toast(R.string.toast_senha_vazio);
+                    toast(R.string.toast_email_vazio);
                 }
             }else {
-                toast(R.string.toast_email_vazio);
+                toast(R.string.toast_cpf_vazio);
             }
         }else {
             toast(R.string.toast_nome_vazio);
