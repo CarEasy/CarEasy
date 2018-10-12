@@ -30,7 +30,7 @@
     <string name="toast_senha_vazio">Preencha o Campo Senha!</string>
 
     //String Exceção
-    <string name="excecao_senha">Digite uma senha mais forte!</string>
+    <string name="excecao_senha">Digite uma senha com no minimo 6 caracteres!</string>
     <string name="excecao_email">Por favor, digite um e-mail válido</string>
     <string name="excecao_conta">Esta conta já foi cadastrada</string>
     <string name="excecao_cadastro">Erro ao cadastrar usuário</string>
