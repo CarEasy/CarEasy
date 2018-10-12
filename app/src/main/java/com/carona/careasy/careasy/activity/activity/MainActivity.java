@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import com.carona.careasy.careasy.R;
+import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
         startActivity( new Intent(this, CadastroActivity.class));
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        UsuarioFirebase.redirecionaUsuarioLogado(MainActivity.this);
+    }
 
 
 }
