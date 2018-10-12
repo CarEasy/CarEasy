@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/fundo"
-    tools:context=".activity.MainActivity">
+    tools:context=".activity.activity.MainActivity">
 
     <ImageView
         android:id="@+id/imageView"
@@ -46,10 +46,10 @@
             android:layout_marginRight="4dp"
             android:layout_weight="1"
             android:background="@color/btnLogin"
-            android:text="Button"
+            android:onClick="abrirTelaLogin"
+            android:text="@string/btn_entrar"
             android:textColor="@android:color/white"
-            android:textStyle="bold"
-            tools:text="Entrar" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/button2"
@@ -58,7 +58,8 @@
             android:layout_marginLeft="4dp"
             android:layout_weight="1"
             android:background="@color/btnCadastro"
-            android:text="Cadastrar"
+            android:onClick="abrirTelaCadastro"
+            android:text="@string/btn_cadastro"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
     </LinearLayout>

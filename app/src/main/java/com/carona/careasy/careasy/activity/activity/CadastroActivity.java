@@ -1,18 +1,16 @@
-package com.carona.careasy.careasy.activity;
+package com.carona.careasy.careasy.activity.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-
 import com.carona.careasy.careasy.R;
 
-public class MainActivity extends AppCompatActivity {
+
+public class CadastroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        getSupportActionBar().hide();
+        setContentView(R.layout.activity_cadastro);
     }
 }
