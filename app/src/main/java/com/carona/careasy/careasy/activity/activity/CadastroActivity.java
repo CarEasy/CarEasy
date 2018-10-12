@@ -21,6 +21,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 
+// importanto a classe "ValidaCPF" do pacote "meuPacote"
+import com.carona.careasy.careasy.activity.util.ValidaCPF;
+
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -35,49 +38,54 @@ public class CadastroActivity extends AppCompatActivity {
         setContentView(R.layout.activity_cadastro);
 
         //INICIALIZAR COMPONENTES
-        campoNome  = findViewById (R.id.editCadastroNome);
-        campoCpf   = findViewById (R.id.editCadastroCPF);
-        campoEmail = findViewById (R.id.editCadastroEmail);
+        campoNome = findViewById(R.id.editCadastroNome);
+        campoCpf = findViewById(R.id.editCadastroCPF);
+        campoEmail = findViewById(R.id.editCadastroEmail);
         campoSenha = findViewById(R.id.editCadastroSenha);
-        switchTipoUsuario = findViewById (R.id.switchTipoUsuario);
+        switchTipoUsuario = findViewById(R.id.switchTipoUsuario);
     }
 
-    public void validarCadastroUsuaario(View view){
+    public void validarCadastroUsuaario(View view) {
         //Recuperar textos dos campos
-        String textoNome  = campoNome.getText().toString();
-        String textoCpf   = campoCpf.getText().toString();
+        String textoNome = campoNome.getText().toString();
+        String textoCpf = campoCpf.getText().toString();
         String textoEmail = campoEmail.getText().toString();
         String textoSenha = campoSenha.getText().toString();
 
-        if( !textoNome.isEmpty() ) {//verifica nome
-            if( !textoCpf.isEmpty() ) {//verifica cpf
-                if( !textoEmail.isEmpty() ) {//verifica e-mail
-                    if( !textoSenha.isEmpty() ) {//verifica senha
+        //Varialvel logica para laidação de CPF.
+        boolean aux = ValidaCPF.isCPF(textoCpf);
 
+        System.out.println("Variavel aux:" + aux);
+        if (!textoNome.isEmpty()) {//verifica nome
+            if ( aux == true) {//verifica cpf
+                if (!textoEmail.isEmpty()) {//verifica e-mail
+                    if (!textoSenha.isEmpty()) {//verifica senha
+                        //Valores a serem enviados ao Banco de Dados...
                         Usuario usuario = new Usuario();
-                        usuario.setNome( textoNome );
-                        usuario.setEmail( textoEmail );
-                        usuario.setSenha( textoSenha );
-                        usuario.setTipo( verificaTipoUsuario() );
+                        usuario.setNome(textoNome);
+                        usuario.setCpf(textoCpf);
+                        usuario.setEmail(textoEmail);
+                        usuario.setSenha(textoSenha);
+                        usuario.setTipo(verificaTipoUsuario());
+                        cadastrarUsuario(usuario);
 
-                        cadastrarUsuario( usuario );
-
-                    }else {
+                    } else {
                         toast(R.string.toast_senha_vazio);
                     }
-                }else {
+                } else {
                     toast(R.string.toast_email_vazio);
                 }
-            }else {
-                toast(R.string.toast_cpf_vazio);
+            } else {
+                toast(R.string.toast_cpf_invalido);
             }
-        }else {
+        } else {
             toast(R.string.toast_nome_vazio);
         }
 
     }
 
-    public void cadastrarUsuario(final Usuario usuario ){
+    public void cadastrarUsuario(final Usuario usuario) {
+
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.createUserWithEmailAndPassword(
@@ -87,43 +95,44 @@ public class CadastroActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if ( task.isSuccessful() ){
+                if (task.isSuccessful()) {
 
                     try {
                         String idUsuario = task.getResult().getUser().getUid();
                         usuario.setId(idUsuario);
                         usuario.salvar();
+
                         //Atualizar nome no UserProfile
                         UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
                         //Redireciona o usuário com base no seu tipo
                         //Se o usuário for passageiro chama a activity maps
                         //senão chama a activity requisições
-                        if ( verificaTipoUsuario() == "P"){
+                        if (verificaTipoUsuario() == "P") {
                             startActivity(new Intent(CadastroActivity.this, MapsActivity.class));
                             finish();
                             toast(R.string.toast_passageiro_cadastrado);
 
-                        }else {
+                        } else {
                             startActivity(new Intent(CadastroActivity.this, RequisicoesActivity.class));
                             finish();
                             toast(R.string.toast_motorista_cadastrado);
 
                         }
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     String excecao = "";
                     try {
                         throw task.getException();
-                    }catch (FirebaseAuthWeakPasswordException e){
+                    } catch (FirebaseAuthWeakPasswordException e) {
                         excecao = getString(R.string.excecao_senha);
                     } catch (FirebaseAuthInvalidCredentialsException e) {
                         excecao = getString(R.string.excecao_email);
                     } catch (FirebaseAuthUserCollisionException e) {
                         excecao = getString(R.string.excecao_conta);
                     } catch (Exception e) {
-                        excecao = getString(R.string.excecao_cadastro)+ e.getMessage();
+                        excecao = getString(R.string.excecao_cadastro) + e.getMessage();
                         e.printStackTrace();
                     }
                     toast(excecao);
@@ -132,17 +141,18 @@ public class CadastroActivity extends AppCompatActivity {
             }
         });
 
+
     }
 
-    public String verificaTipoUsuario(){
-        return switchTipoUsuario.isChecked() ? "M" : "P" ;
+    public String verificaTipoUsuario() {
+        return switchTipoUsuario.isChecked() ? "M" : "P";
     }
 
-    public  void toast(int string){
+    public void toast(int string) {
         Toast.makeText(CadastroActivity.this, string, Toast.LENGTH_SHORT).show();
     }
 
-    public  void toast(String string){
+    public void toast(String string) {
         Toast.makeText(CadastroActivity.this, string, Toast.LENGTH_SHORT).show();
     }
 }

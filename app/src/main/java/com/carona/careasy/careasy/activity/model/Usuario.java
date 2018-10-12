@@ -13,6 +13,7 @@ public class Usuario {
     private String email;
     private String senha;
     private String tipo;
+    private String cpf;
 
     public Usuario() {
     }
@@ -22,6 +23,7 @@ public class Usuario {
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         DatabaseReference usuario = firebaseRef.child("usuarios").child(getId());
         usuario.setValue(this);
+
     }
 
     public String getId() {
@@ -63,5 +65,13 @@ public class Usuario {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 }

@@ -25,9 +25,9 @@
     <string name="toast_passageiro_cadastrado">Sucesso ao Cadastrar Passageiro</string>
     <string name="toast_motorista_cadastrado">Sucesso ao Cadastrar Motorista</string>
     <string name="toast_nome_vazio">Preencha o Campo Nome!</string>
-    <string name="toast_cpf_vazio">Preencha o Campo CPF!</string>
     <string name="toast_email_vazio">Preencha o Campo E-mail!</string>
     <string name="toast_senha_vazio">Preencha o Campo Senha!</string>
+    <string name="toast_cpf_invalido">Preencha o Campo com CPF Válido!</string>
 
     //String Exceção
     <string name="excecao_senha">Digite uma senha com no minimo 6 caracteres!</string>
