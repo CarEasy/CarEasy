@@ -57,19 +57,13 @@ public class CadastroActivity extends AppCompatActivity {
                     cadastrarUsuario( usuario );
 
                 }else {
-                    Toast.makeText(CadastroActivity.this,
-                            "Preencha a senha!",
-                            Toast.LENGTH_SHORT).show();
+                    toast(R.string.toast_senha_vazio);
                 }
             }else {
-                Toast.makeText(CadastroActivity.this,
-                        "Preencha o email!",
-                        Toast.LENGTH_SHORT).show();
+                toast(R.string.toast_email_vazio);
             }
         }else {
-            Toast.makeText(CadastroActivity.this,
-                    "Preencha o nome!",
-                    Toast.LENGTH_SHORT).show();
+            toast(R.string.toast_nome_vazio);
         }
 
     }
@@ -85,9 +79,7 @@ public class CadastroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if ( task.isSuccessful() ){
-                    Toast.makeText(CadastroActivity.this,
-                            "Sucesso ao cadastrar UsuÃ¡rio!",
-                            Toast.LENGTH_SHORT).show();
+                    toast(R.string.toast_user_cadastrado);
                 }
 
             }
@@ -100,5 +92,7 @@ public class CadastroActivity extends AppCompatActivity {
         return switchTipoUsuario.isChecked() ? "M" : "P" ;
     }
 
-
+    public  void toast(int string){
+        Toast.makeText(CadastroActivity.this, string, Toast.LENGTH_SHORT).show();
+    }
 }
