@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.carona.careasy.careasy.activity.activity.MapsActivity;
+import com.carona.careasy.careasy.activity.activity.PassageiroActivity;
 import com.carona.careasy.careasy.activity.activity.RequisicoesActivity;
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
 import com.carona.careasy.careasy.activity.model.Usuario;
@@ -69,7 +70,7 @@ public class UsuarioFirebase {
                         Intent i = new Intent(activity, RequisicoesActivity.class);
                         activity.startActivity(i);
                     }else {
-                        Intent i = new Intent(activity, MapsActivity.class);
+                        Intent i = new Intent(activity, PassageiroActivity.class);
                         activity.startActivity(i);
                     }
 

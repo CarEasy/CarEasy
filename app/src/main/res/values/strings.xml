@@ -6,6 +6,7 @@
     <string name="titulo_maps">Map</string>
     <string name="titulo_cadastro">Cadastrar uma conta</string>
     <string name="titulo_login">Acessar minha conta</string>
+    <string name="titulo_passageiro">Iniciar uma Carona</string>
 
     //Hint...
     <string name="hint_email">E-mail</string>
@@ -36,5 +37,7 @@
     <string name="excecao_cadastro">Erro ao cadastrar usuário!</string>
     <string name="excecao_usuario">Usuário não está cadastrado!</string>
     <string name="excecao_login_invalido">E-mail e senha não correspondem a um usuário cadastrado!</string>
+    <string name="title_activity_passageiro">PassageiroActivity</string>
+    <string name="title_activity_maps">Map</string>
 
 </resources>
