@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.carona.careasy.careasy.R;
+import com.carona.careasy.careasy.activity.helper.Permissoes;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -31,9 +32,7 @@ import java.util.Locale;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private String[] permissoes = new String[]{
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
+
     private LocationManager locationManager;
     private LocationListener locaitonListener;
 
@@ -42,13 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        //Validar Permissões
-        Permissoes.validarPermissoes(permissoes, this, 1);
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
     }
 
 
@@ -115,47 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        for (int permissaoResultado : grantResults) {
-            if (permissaoResultado == PackageManager.PERMISSION_DENIED) {
-                //Alerta
-                alertaValidacaoPermissao();
-            } else if (permissaoResultado == PackageManager.PERMISSION_GRANTED) {
-                //Recuperar localizacao do usuario.
 
-                /*
-                 * 1) Provedor da localização
-                 * 2) Tempo mínimo entre atualizações de localização (milesegundos)
-                 * 3) Distancia minima entre atualizações de localização (metros)
-                 * 4) Location Listerner (para recebermos as atualizações)
-                 */
-                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-                    locationManager.requestLocationUpdates(
-                            LocationManager.GPS_PROVIDER,
-                            10000,
-                            2,
-                            locaitonListener
-                    );
-                }
-            }
-        }
-    }
-    public void alertaValidacaoPermissao(){
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Permissões Negadas");
-        builder.setMessage("Para utilizar o app é nescessário aceitar as permições");
-        builder.setCancelable(false);
-        builder.setPositiveButton("'Confirmar", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                finish();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
     public void markerMap(Double latitude, Double longitude){
         Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
 

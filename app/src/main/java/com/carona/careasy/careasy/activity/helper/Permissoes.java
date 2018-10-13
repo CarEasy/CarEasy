@@ -1,4 +1,4 @@
-package com.carona.careasy.careasy.activity.activity;
+package com.carona.careasy.careasy.activity.helper;
 
 import android.app.Activity;
 import android.content.pm.PackageManager;
