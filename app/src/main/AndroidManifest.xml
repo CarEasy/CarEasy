@@ -41,9 +41,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.activity.MapsActivity"
-            android:label="@string/title_activity_maps" />
-        <activity
             android:name=".activity.activity.LoginActivity"
             android:label="@string/titulo_login"
             android:parentActivityName=".activity.activity.MainActivity" />
@@ -56,6 +53,9 @@
             android:name=".activity.activity.PassageiroActivity"
             android:label="@string/title_activity_passageiro"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.activity.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

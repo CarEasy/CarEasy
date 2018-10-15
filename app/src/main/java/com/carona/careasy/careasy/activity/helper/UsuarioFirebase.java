@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
-import com.carona.careasy.careasy.activity.activity.MapsActivity;
 import com.carona.careasy.careasy.activity.activity.PassageiroActivity;
 import com.carona.careasy.careasy.activity.activity.RequisicoesActivity;
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;

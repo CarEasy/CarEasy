@@ -7,16 +7,23 @@
     <string name="titulo_cadastro">Cadastrar uma conta</string>
     <string name="titulo_login">Acessar minha conta</string>
     <string name="titulo_passageiro">Iniciar uma Carona</string>
+    <string name="titulo_motorista">Requisições</string>
 
     //Hint...
     <string name="hint_email">E-mail</string>
     <string name="hint_senha">Senha</string>
     <string name="hint_nome">Nome Completo</string>
     <string name="hint_CPF">CPF</string>
+    <string name="hint_my_local">Meu Local</string>
+    <string name="hint_destino">Digite seu destino</string>
 
     //Botões...
     <string name="btn_entrar">Entrar</string>
     <string name="btn_cadastro">Cadastro</string>
+    <string name="btn_carona">Chamar Carona</string>
+
+    //Itens Menu ...
+    <string name="sair">Sair</string>
 
     //Labels...
     <string name="lbl_passageiro">Passageiro</string>
