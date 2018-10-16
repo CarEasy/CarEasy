@@ -17,6 +17,18 @@
     <string name="hint_my_local">Meu Local</string>
     <string name="hint_destino">Digite seu destino</string>
 
+    //Mensagem...
+    <string name="msg_cidade">Cidade:</string>
+    <string name="msg_bairro">Bairro:</string>
+    <string name="msg_rua">Rua:</string>
+    <string name="msg_numero">Número:</string>
+    <string name="msg_cep">Cep:</string>
+    <string name="msg_confirmar_enderco">Confirme seu endereço</string>
+
+    //AlertDialog
+    <string name="confirmar">Confirmar</string>
+    <string name="cancelar">Cancelar</string>
+
     //Botões...
     <string name="btn_entrar">Entrar</string>
     <string name="btn_cadastro">Cadastro</string>
@@ -36,6 +48,7 @@
     <string name="toast_email_vazio">Preencha o Campo E-mail!</string>
     <string name="toast_senha_vazio">Preencha o Campo Senha!</string>
     <string name="toast_cpf_invalido">Preencha o Campo com CPF Válido!</string>
+    <string name="toast_endereco_destino">Informe o endereço de destino!</string>
 
     //String Exceção
     <string name="excecao_senha">Digite uma senha mais forte!</string>
