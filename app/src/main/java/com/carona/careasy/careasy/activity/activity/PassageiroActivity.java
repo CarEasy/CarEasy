@@ -1,4 +1,5 @@
 package com.carona.careasy.careasy.activity.activity;
+
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,7 +20,10 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.carona.careasy.careasy.R;
+import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
 import com.carona.careasy.careasy.activity.model.Destino;
+import com.carona.careasy.careasy.activity.model.Requisicao;
+import com.carona.careasy.careasy.activity.model.Usuario;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -28,13 +32,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
-
-
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
-
-
-
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -49,6 +47,7 @@ public class PassageiroActivity extends AppCompatActivity
     private FirebaseAuth autenticacao;
     private LocationManager locationManager;
     private LocationListener locationListener;
+    private LatLng localPassageiro;
 
 
     @Override
@@ -87,7 +86,7 @@ public class PassageiroActivity extends AppCompatActivity
             Address addressDestino = recuperarEndereco( enderecoDestino );
             if( addressDestino != null ){
 
-                Destino destino = new Destino();
+                final Destino destino = new Destino();
                 destino.setCidade( addressDestino.getAdminArea() );
                 destino.setCep( addressDestino.getPostalCode() );
                 destino.setBairro( addressDestino.getSubLocality() );
@@ -111,6 +110,7 @@ public class PassageiroActivity extends AppCompatActivity
                             public void onClick(DialogInterface dialog, int which) {
 
                                 //salvar requisição
+                                salvarRequisicao(destino);
 
                             }
                         }).setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
@@ -129,6 +129,20 @@ public class PassageiroActivity extends AppCompatActivity
                     getString(R.string.toast_endereco_destino),
                     Toast.LENGTH_SHORT).show();
         }
+
+    }
+    private void salvarRequisicao(Destino destino){
+
+        Requisicao requisicao = new Requisicao();
+        requisicao.setDestino( destino );
+
+        Usuario usuarioPassageiro = UsuarioFirebase.getDadosUsuarioLogado();
+        usuarioPassageiro.setLatitude( String.valueOf( localPassageiro.latitude ) );
+        usuarioPassageiro.setLongitude( String.valueOf( localPassageiro.longitude ) );
+
+        requisicao.setPassageiro( usuarioPassageiro );
+        requisicao.setStatus( Requisicao.STATUS_AGUARDANDO );
+        requisicao.salvar();
 
     }
 
@@ -163,17 +177,17 @@ public class PassageiroActivity extends AppCompatActivity
                 //recuperar latitude e longitude
                 double latitude = location.getLatitude();
                 double longitude = location.getLongitude();
-                LatLng meuLocal = new LatLng(latitude, longitude);
+                localPassageiro = new LatLng(latitude, longitude);
 
                 mMap.clear();
                 mMap.addMarker(
                         new MarkerOptions()
-                                .position(meuLocal)
+                                .position(localPassageiro)
                                 .title(getString(R.string.hint_my_local))
                                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.usuario))
                 );
                 mMap.moveCamera(
-                        CameraUpdateFactory.newLatLngZoom(meuLocal, 20)
+                        CameraUpdateFactory.newLatLngZoom(localPassageiro, 20)
                 );
 
             }
