@@ -10,14 +10,18 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.carona.careasy.careasy.R;
 import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
@@ -33,7 +37,15 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -42,12 +54,20 @@ public class PassageiroActivity extends AppCompatActivity
 
     //Componentes
     private EditText editDestino;
+    private LinearLayout linearLayoutDestino;
+    private Button buttonChamarCarona;
 
     private GoogleMap mMap;
     private FirebaseAuth autenticacao;
     private LocationManager locationManager;
     private LocationListener locationListener;
     private LatLng localPassageiro;
+    private boolean caronaChamada = false;
+    private DatabaseReference firebaseRef;
+    private Requisicao requisicao;
+
+    //teste
+    private Usuario usuario;
 
 
     @Override
@@ -55,7 +75,52 @@ public class PassageiroActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_passageiro);
 
+
+
         inicializarComponentes();
+
+        //Adicionar listener para status da requisição...
+        verificaStatusRequisicao();
+
+    }
+
+    private void verificaStatusRequisicao() {
+
+        final Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+        DatabaseReference requisicoes = firebaseRef.child("requisicoes");
+        Query requisicaoPesquisa = requisicoes.orderByChild("passageiro/id")
+                .equalTo(usuarioLogado.getId());
+
+        requisicaoPesquisa.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<Requisicao> lista = new ArrayList<>();
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    lista.add(ds.getValue(Requisicao.class));
+                }
+
+                Collections.reverse(lista);
+
+                if (lista != null && lista.size()>0){
+                    requisicao = lista.get(0);
+
+                    switch (requisicao.getStatus()) {
+                        case Requisicao.STATUS_AGUARDANDO:
+                            linearLayoutDestino.setVisibility(View.GONE);
+                            buttonChamarCarona.setText("Cancelar Uber");
+                            caronaChamada = true;
+                            break;
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
@@ -77,57 +142,67 @@ public class PassageiroActivity extends AppCompatActivity
 
     }
 
+
+
     public void chamarCarona(View view){
 
-        String enderecoDestino = editDestino.getText().toString();
+        if (!caronaChamada ){//Carona não foi Chamada...
 
-        if( !enderecoDestino.equals("") || enderecoDestino != null ){
+            String enderecoDestino = editDestino.getText().toString();
 
-            Address addressDestino = recuperarEndereco( enderecoDestino );
-            if( addressDestino != null ){
+            if( !enderecoDestino.equals("") || enderecoDestino != null ){
 
-                final Destino destino = new Destino();
-                destino.setCidade( addressDestino.getAdminArea() );
-                destino.setCep( addressDestino.getPostalCode() );
-                destino.setBairro( addressDestino.getSubLocality() );
-                destino.setRua( addressDestino.getThoroughfare() );
-                destino.setNumero( addressDestino.getFeatureName() );
-                destino.setLatitude( String.valueOf(addressDestino.getLatitude()) );
-                destino.setLongitude( String.valueOf(addressDestino.getLongitude()) );
+                Address addressDestino = recuperarEndereco( enderecoDestino );
+                if( addressDestino != null ){
 
-                StringBuilder mensagem = new StringBuilder();
-                mensagem.append( getString(R.string.msg_cidade) + destino.getCidade() );
-                mensagem.append( "\n"+getString(R.string.msg_rua) + destino.getRua() );
-                mensagem.append("\n"+getString(R.string.msg_bairro) + destino.getBairro() );
-                mensagem.append( "\n"+getString(R.string.msg_numero)+ destino.getNumero() );
-                mensagem.append( "\n"+getString(R.string.msg_cep) + destino.getCep() );
+                    final Destino destino = new Destino();
+                    destino.setCidade( addressDestino.getAdminArea() );
+                    destino.setCep( addressDestino.getPostalCode() );
+                    destino.setBairro( addressDestino.getSubLocality() );
+                    destino.setRua( addressDestino.getThoroughfare() );
+                    destino.setNumero( addressDestino.getFeatureName() );
+                    destino.setLatitude( String.valueOf(addressDestino.getLatitude()) );
+                    destino.setLongitude( String.valueOf(addressDestino.getLongitude()) );
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                        .setTitle(getString(R.string.msg_confirmar_enderco))
-                        .setMessage(mensagem)
-                        .setPositiveButton(getString(R.string.confirmar), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                    StringBuilder mensagem = new StringBuilder();
+                    mensagem.append( getString(R.string.msg_cidade) + destino.getCidade() );
+                    mensagem.append( "\n"+getString(R.string.msg_rua) + destino.getRua() );
+                    mensagem.append("\n"+getString(R.string.msg_bairro) + destino.getBairro() );
+                    mensagem.append( "\n"+getString(R.string.msg_numero)+ destino.getNumero() );
+                    mensagem.append( "\n"+getString(R.string.msg_cep) + destino.getCep() );
 
-                                //salvar requisição
-                                salvarRequisicao(destino);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this)
+                            .setTitle(getString(R.string.msg_confirmar_enderco))
+                            .setMessage(mensagem)
+                            .setPositiveButton(getString(R.string.confirmar), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                            }
-                        }).setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
+                                    //salvar requisição
+                                    salvarRequisicao(destino);
+                                    caronaChamada = true;
 
-                            }
-                        });
-                AlertDialog dialog = builder.create();
-                dialog.show();
+                                }
+                            }).setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
+                                }
+                            });
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                }
+
+            }else {
+                Toast.makeText(this,
+                        getString(R.string.toast_endereco_destino),
+                        Toast.LENGTH_SHORT).show();
             }
 
-        }else {
-            Toast.makeText(this,
-                    getString(R.string.toast_endereco_destino),
-                    Toast.LENGTH_SHORT).show();
+        }else{//Cancelar Requisição...
+
+            caronaChamada = false;
         }
 
     }
@@ -144,6 +219,8 @@ public class PassageiroActivity extends AppCompatActivity
         requisicao.setStatus( Requisicao.STATUS_AGUARDANDO );
         requisicao.salvar();
 
+        linearLayoutDestino.setVisibility(View.GONE); //Ocultar Layout...
+        buttonChamarCarona.setText(R.string.btn_cancelar_carona); // Mudar nome do Botão...
     }
 
     private Address recuperarEndereco(String endereco){
@@ -248,8 +325,11 @@ public class PassageiroActivity extends AppCompatActivity
 
         //Inicializar componentes
         editDestino = findViewById(R.id.editDestino);
+        linearLayoutDestino = findViewById(R.id.linearLayoutDestino);
+        buttonChamarCarona = findViewById(R.id.buttonChamarCarona);
 
-        //ConfiguraÃ§Ãµes iniciais
+        //Configurações iniciais
+        firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.

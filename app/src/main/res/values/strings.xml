@@ -33,6 +33,7 @@
     <string name="btn_entrar">Entrar</string>
     <string name="btn_cadastro">Cadastro</string>
     <string name="btn_carona">Chamar Carona</string>
+    <string name="btn_cancelar_carona">Cancelar Carona</string>
 
     //Itens Menu ...
     <string name="sair">Sair</string>
