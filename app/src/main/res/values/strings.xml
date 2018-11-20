@@ -25,6 +25,7 @@
     <string name="msg_numero">Número:</string>
     <string name="msg_cep">Cep:</string>
     <string name="msg_confirmar_enderco">Confirme seu endereço</string>
+    <string name="msg_upload_foto_cnh">Enexo de foto CNH:</string>
 
     //AlertDialog
     <string name="confirmar">Confirmar</string>

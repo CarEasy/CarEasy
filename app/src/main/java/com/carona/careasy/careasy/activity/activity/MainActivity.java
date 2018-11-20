@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import com.carona.careasy.careasy.R;
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
+import com.carona.careasy.careasy.activity.helper.Permissoes;
 import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -23,9 +24,12 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth autenticacao;
     private LocationManager locationManager;
     private LocationListener locaitonListener;
-    private String[] permissoes = new String[]{
-            Manifest.permission.ACCESS_FINE_LOCATION
+    private String[] permissoesNecessarias = new String[]{
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.INTERNET
     };
+    private Permissoes permissao;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().hide();
 
-
+        permissao.validarPermissoes(permissoesNecessarias, this, 1);
         //Deslogar...
         /*
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();

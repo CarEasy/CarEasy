@@ -3,6 +3,7 @@ package com.carona.careasy.careasy.activity.activity;
 import android.Manifest;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -24,6 +25,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.carona.careasy.careasy.R;
+import com.carona.careasy.careasy.activity.helper.Permissoes;
 import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
 import com.carona.careasy.careasy.activity.model.Destino;
 import com.carona.careasy.careasy.activity.model.Requisicao;
@@ -65,6 +67,7 @@ public class PassageiroActivity extends AppCompatActivity
     private boolean caronaChamada = false;
     private DatabaseReference firebaseRef;
     private Requisicao requisicao;
+
 
     //teste
     private Usuario usuario;
@@ -323,6 +326,11 @@ public class PassageiroActivity extends AppCompatActivity
         switch (item.getItemId()){
             case R.id.menuSair :
                 autenticacao.signOut();
+                finish();
+                break;
+            case R.id.menuCadVeiculo :
+                Intent intent = new Intent(this, CadastroVeiculoActivity.class);
+                startActivity(intent);
                 finish();
                 break;
         }
