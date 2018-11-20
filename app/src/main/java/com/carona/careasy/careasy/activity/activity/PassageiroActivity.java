@@ -108,10 +108,14 @@ public class PassageiroActivity extends AppCompatActivity
                     switch (requisicao.getStatus()) {
                         case Requisicao.STATUS_AGUARDANDO:
                             linearLayoutDestino.setVisibility(View.GONE);
-                            buttonChamarCarona.setText("Cancelar Uber");
+                            buttonChamarCarona.setText(R.string.btn_cancelar_carona);
                             caronaChamada = true;
                             break;
-
+                        case Requisicao.STATUS_FINALIZADA:
+                            linearLayoutDestino.setVisibility(View.VISIBLE);
+                            buttonChamarCarona.setText(R.string.btn_carona);
+                            caronaChamada = false;
+                            break;
                     }
                 }
             }
@@ -201,8 +205,8 @@ public class PassageiroActivity extends AppCompatActivity
             }
 
         }else{//Cancelar Requisição...
+            cancelaRequisicao();
 
-            caronaChamada = false;
         }
 
     }
@@ -222,6 +226,15 @@ public class PassageiroActivity extends AppCompatActivity
         linearLayoutDestino.setVisibility(View.GONE); //Ocultar Layout...
         buttonChamarCarona.setText(R.string.btn_cancelar_carona); // Mudar nome do Botão...
     }
+    private void cancelaRequisicao(){
+
+        Requisicao requisicao = new Requisicao();
+
+        requisicao.setStatus( Requisicao.STATUS_FINALIZADA );
+        requisicao.salvar();
+
+    }
+
 
     private Address recuperarEndereco(String endereco){
 

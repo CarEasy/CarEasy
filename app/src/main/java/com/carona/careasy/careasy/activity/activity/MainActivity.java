@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -20,6 +21,8 @@ import com.google.firebase.auth.FirebaseAuth;
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth autenticacao;
+    private LocationManager locationManager;
+    private LocationListener locaitonListener;
     private String[] permissoes = new String[]{
             Manifest.permission.ACCESS_FINE_LOCATION
     };
@@ -32,9 +35,11 @@ public class MainActivity extends AppCompatActivity {
 
 
         //Deslogar...
-        /*autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
+        /*
+        autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
         autenticacao.signOut();
-        */
+         */
+
     }
 
     public void abrirTelaLogin(View view){
@@ -58,11 +63,12 @@ public class MainActivity extends AppCompatActivity {
             if (permissaoResultado == PackageManager.PERMISSION_DENIED) {
                 //Alerta
                 alertaValidacaoPermissao();
-            }/*else if (permissaoResultado == PackageManager.PERMISSION_GRANTED) {
+            }else if (permissaoResultado == PackageManager.PERMISSION_GRANTED) {
                 //Recuperar localizacao do usuario.
 
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+
                 locationManager.requestLocationUpdates(
                         LocationManager.GPS_PROVIDER,
                         10000,
@@ -70,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
                         locaitonListener
                 );
             }
-        }*/
+        }
             /*
              * 1) Provedor da localização
              * 2) Tempo mínimo entre atualizações de localização (milesegundos)

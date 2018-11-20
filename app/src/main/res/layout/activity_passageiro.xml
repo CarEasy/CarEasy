@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.activity.PassageiroActivity">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".activity.activity.PassageiroActivity"
+    >
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -68,7 +70,7 @@
     <Button
         android:id="@+id/buttonChamarCarona"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:onClick="chamarCarona"
         android:text="@string/btn_carona"
