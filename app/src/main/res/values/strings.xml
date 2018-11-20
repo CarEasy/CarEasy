@@ -5,6 +5,7 @@
     <string name="app_name">CarEasy</string>
     <string name="titulo_maps">Map</string>
     <string name="titulo_cadastro">Cadastrar uma conta</string>
+    <string name="titulo_cadastro_veiculo">Cadastrar um Veiculo</string>
     <string name="titulo_login">Acessar minha conta</string>
     <string name="titulo_passageiro">Iniciar uma Carona</string>
     <string name="titulo_motorista">Requisições</string>
@@ -34,7 +35,7 @@
     <string name="btn_cadastro">Cadastro</string>
     <string name="btn_carona">Chamar Carona</string>
     <string name="btn_cancelar_carona">Cancelar Carona</string>
-
+    <string name="btn_cadastrar">Cadastrar</string>
     //Itens Menu ...
     <string name="sair">Sair</string>
 

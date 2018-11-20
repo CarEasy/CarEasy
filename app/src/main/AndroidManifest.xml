@@ -49,7 +49,10 @@
             android:name=".activity.activity.CadastroActivity"
             android:label="@string/titulo_cadastro"
             android:parentActivityName=".activity.activity.MainActivity" />
-        <activity android:name=".activity.activity.RequisicoesActivity" />
+        <activity
+            android:name=".activity.activity.RequisicoesActivity"
+            android:label="@string/titulo_cadastro_veiculo"
+            android:parentActivityName=".activity.activity.PassageiroActivity"/>
         <activity
             android:name=".activity.activity.PassageiroActivity"
             android:label="@string/title_activity_passageiro"
