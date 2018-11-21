@@ -13,17 +13,41 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toolbar;
+import android.widget.Spinner;
+import android.widget.Toast;
 import com.carona.careasy.careasy.R;
+
+import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
+import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
+import com.carona.careasy.careasy.activity.model.Requisicao;
+import com.carona.careasy.careasy.activity.model.Usuario;
+import com.carona.careasy.careasy.activity.model.Veiculo;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.carona.careasy.careasy.activity.helper.Permissoes;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class CadastroVeiculoActivity extends AppCompatActivity {
 
 
-
+    private Spinner spinnerTipoVeiculo;
     private TextInputEditText campoPlaca, campoCor, campoModelo, campoAno;
     private ImageView imageViewCNH;
     private FirebaseAuth autenticacao;
@@ -35,6 +59,11 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
     private ImageButton imageButtonCamera, imageButtonGaleria;
     private static final int SELECAO_CAMERA  = 100;
     private static final int SELECAO_GALERIA = 200;
+    private boolean statusImagem = false;
+    private DatabaseReference firebaseRef;
+    private  StorageReference storageReference;
+    private String identificadorUsuario;
+
 
 
     @Override
@@ -42,20 +71,26 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro_veiculo);
 
+        storageReference = ConfiguracaoFirebase.getFirebaseStorage();
+        identificadorUsuario = UsuarioFirebase.getIdentificadorUsuario();
         //INICIALIZAR COMPONENTES
         campoPlaca = findViewById(R.id.editCadastroPlaca);
         campoCor = findViewById(R.id.editCadastroCor);
         campoModelo = findViewById(R.id.editCadastroModelo);
         campoAno = findViewById(R.id.editCadastroAno);
-
-
-        //Validar permissões
-        permissao.validarPermissoes(permissoesNecessarias, this, 1);
-
         imageButtonCamera  = findViewById(R.id.imageButtonCamera);
         imageButtonGaleria = findViewById(R.id.imageButtonGaleria);
         imageViewCNH = findViewById(R.id.imageViewCNH);
+        spinnerTipoVeiculo = findViewById(R.id.spinnerTipoVeiculo);
+        storageReference = ConfiguracaoFirebase.getFirebaseStorage();
 
+
+        //Inicializando Array Para Spinner
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.spinner_tipoVeiculo, android.R.layout.simple_spinner_item);
+        spinnerTipoVeiculo.setAdapter(adapter);
+
+        //Validar permissões
+        permissao.validarPermissoes(permissoesNecessarias, this, 1);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -107,6 +142,35 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
                 if ( imagem != null ){
 
                     imageViewCNH.setImageBitmap( imagem );
+                    statusImagem = true;
+                    //Recuperar dados da imagem para o firebase
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos );
+                    byte[] dadosImagem = baos.toByteArray();
+
+                    //Salvar imagem no firebase
+                    StorageReference imagemRef = storageReference
+                            .child("imagens")
+                            .child("usuarios")
+                            //.child( identificadorUsuario )
+                            .child( identificadorUsuario+ ".jpeg");
+
+                    UploadTask uploadTask = imagemRef.putBytes( dadosImagem );
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(CadastroVeiculoActivity.this,
+                                    "Erro ao fazer upload da imagem",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Toast.makeText(CadastroVeiculoActivity.this,
+                                    "Sucesso ao fazer upload da imagem",
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
                 }
 
@@ -148,74 +212,75 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    public void validarCadastroCarro(View view) {
+    public void validarCadastroVeiculo(View view) {
         //Recuperar textos dos campos
-        String textoPlaca = campoPlaca.getText().toString();
-        String textoCor = campoCor.getText().toString();
+        String tipoVeiculo = spinnerTipoVeiculo.getSelectedItem().toString();
         String textoModelo = campoModelo.getText().toString();
+        String textoCor = campoCor.getText().toString();
         String textoAno = campoModelo.getText().toString();
-
-        /*
-        //Valores a serem enviados ao Banco de Dados...
-        Usuario usuario = new Usuario();
-        usuario.setNome(textoNome);
-        usuario.setCpf(textoCpf);
-        usuario.setEmail(textoEmail);
-        usuario.setSenha(textoSenha);
-        usuario.setTipo(verificaTipoUsuario());
-        cadastrarUsuario(usuario);
-
-        if (!textoNome.isEmpty()) {//verifica nome
-            if ( aux == true) {//verifica cpf
-                if (!textoEmail.isEmpty()) {//verifica e-mail
-                    if (!textoSenha.isEmpty()) {//verifica senha
+        String textoPlaca = campoPlaca.getText().toString();
 
 
+
+        if (!tipoVeiculo.isEmpty() && tipoVeiculo != "Selecione") {//verifica nome
+            if (!textoModelo.isEmpty()) {//verifica cpf
+                if (!textoCor.isEmpty()) {//verifica e-mail
+                    if (!textoAno.isEmpty()) {//verifica senha
+                        if (!textoPlaca.isEmpty()) {//verifica senha
+                            if (statusImagem ==true){
+                                 final Usuario usuario = new Usuario();
+
+                                Veiculo veiculo = new Veiculo();
+
+                                veiculo.setDono(usuario);
+                                veiculo.setTipo(tipoVeiculo);
+                                veiculo.setModelo(textoModelo);
+                                veiculo.setCor(textoCor);
+                                veiculo.setAno(textoAno);
+                                veiculo.setPlaca(textoPlaca);
+
+                                veiculo.salvar();
+
+                            } else {
+                                toast("Faltou a Foto!");
+                            }
+                        } else {
+                            toast(R.string.toast_email_vazio);
+                        }
                     } else {
-                        toast(R.string.toast_senha_vazio);
+                        toast(R.string.toast_cpf_invalido);
                     }
                 } else {
-                    toast(R.string.toast_email_vazio);
+                    toast(R.string.toast_cpf_invalido);
                 }
             } else {
-                toast(R.string.toast_cpf_invalido);
+                toast(R.string.toast_nome_vazio);
             }
         } else {
             toast(R.string.toast_nome_vazio);
         }
-
     }
-     public void toast(int string) {
-        Toast.makeText(RequisicoesActivity.this, string, Toast.LENGTH_SHORT).show();
+
+
+
+
+    public void toast(int string) {
+        Toast.makeText(CadastroVeiculoActivity.this, string, Toast.LENGTH_SHORT).show();
     }
 
     public void toast(String string) {
-        Toast.makeText(RequisicoesActivity.this, string, Toast.LENGTH_SHORT).show();
+        Toast.makeText(CadastroVeiculoActivity.this, string, Toast.LENGTH_SHORT).show();
     }
-         */
+
+    private void verificaStatusRequisicao() {
+
+        final Usuario usuarioLogado = UsuarioFirebase.getDadosUsuarioLogado();
+        DatabaseReference requisicoes = firebaseRef.child("Usuario");
+        Query requisicaoPesquisa = requisicoes.orderByChild("nome").equalTo(usuarioLogado.getId());
+
+        System.out.println("Nome: "+requisicaoPesquisa.toString());
+
+    };
 
 
-
-
-
-
-
-    }
 }

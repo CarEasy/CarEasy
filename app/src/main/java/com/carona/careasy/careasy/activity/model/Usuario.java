@@ -8,15 +8,25 @@ import com.google.firebase.database.Exclude;
 
 public class Usuario {
 
+
     private String id;
     private String nome;
     private String email;
     private String senha;
     private String tipo;
     private String cpf;
+    private Veiculo veiculo;
 
     private String latitude;
     private String longitude;
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
 
     public String getLatitude() {
         return latitude;
@@ -40,8 +50,8 @@ public class Usuario {
     public void salvar(){
 
         DatabaseReference firebaseRef = ConfiguracaoFirebase.getFirebaseDatabase();
-        DatabaseReference usuario = firebaseRef.child("usuarios").child(getId());
-        usuario.setValue(this);
+        DatabaseReference usuario = firebaseRef.child("usuarios");
+        usuario.child(getCpf()).setValue(this);
 
     }
 
@@ -93,4 +103,6 @@ public class Usuario {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+
 }

@@ -69,8 +69,8 @@ public class PassageiroActivity extends AppCompatActivity
     private Requisicao requisicao;
 
 
-    //teste
-    private Usuario usuario;
+
+
 
 
     @Override

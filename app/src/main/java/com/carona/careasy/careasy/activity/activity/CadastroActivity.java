@@ -45,19 +45,19 @@ public class CadastroActivity extends AppCompatActivity {
         switchTipoUsuario = findViewById(R.id.switchTipoUsuario);
     }
 
-    public void validarCadastroUsuaario(View view) {
+    public void validarCadastroUsuario(View view) {
         //Recuperar textos dos campos
         String textoNome = campoNome.getText().toString();
         String textoCpf = campoCpf.getText().toString();
         String textoEmail = campoEmail.getText().toString();
         String textoSenha = campoSenha.getText().toString();
 
-        //Varialvel logica para laidação de CPF.
+        //Varialvel logica para validação de CPF.
         boolean aux = ValidaCPF.isCPF(textoCpf);
 
         System.out.println("Variavel aux:" + aux);
         if (!textoNome.isEmpty()) {//verifica nome
-            if ( aux == true) {//verifica cpf
+            if (aux) {//verifica cpf
                 if (!textoEmail.isEmpty()) {//verifica e-mail
                     if (!textoSenha.isEmpty()) {//verifica senha
                         //Valores a serem enviados ao Banco de Dados...
@@ -107,15 +107,12 @@ public class CadastroActivity extends AppCompatActivity {
                         //Redireciona o usuário com base no seu tipo
                         //Se o usuário for passageiro chama a activity maps
                         //senão chama a activity requisições
-                        if (verificaTipoUsuario() == "P") {
+                        if (verificaTipoUsuario() != "M") {
                             startActivity(new Intent(CadastroActivity.this, PassageiroActivity.class));
+                            usuario.setVeiculo(null);
+                            usuario.salvar();
                             finish();
                             toast(R.string.toast_passageiro_cadastrado);
-
-                        } else {
-                            startActivity(new Intent(CadastroActivity.this, RequisicoesActivity.class));
-                            finish();
-                            toast(R.string.toast_motorista_cadastrado);
 
                         }
                     } catch (Exception e) {

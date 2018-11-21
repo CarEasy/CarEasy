@@ -17,6 +17,10 @@
     <string name="hint_CPF">CPF</string>
     <string name="hint_my_local">Meu Local</string>
     <string name="hint_destino">Digite seu destino</string>
+    <string name="hint_placa">Placa</string>
+    <string name="hint_ano">Ano</string>
+    <string name="hint_cor">Cor</string>
+    <string name="hint_modelo">Modelo</string>
 
     //Mensagem...
     <string name="msg_cidade">Cidade:</string>
@@ -26,6 +30,7 @@
     <string name="msg_cep">Cep:</string>
     <string name="msg_confirmar_enderco">Confirme seu endereço</string>
     <string name="msg_upload_foto_cnh">Enexo de foto CNH:</string>
+    <string name="msg_tipo_veiculo">Tipo de Veiculo</string>
 
     //AlertDialog
     <string name="confirmar">Confirmar</string>
@@ -69,5 +74,12 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+
+    //String Array
+    <string-array name="spinner_tipoVeiculo" >
+        <item>Selecione</item>
+        <item>Carro</item>
+        <item>Moto</item>
+    </string-array>
 
 </resources>
