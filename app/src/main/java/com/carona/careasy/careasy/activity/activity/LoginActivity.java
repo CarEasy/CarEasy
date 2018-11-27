@@ -64,10 +64,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if( task.isSuccessful() ){
-
-
-                    //Verificar o tipo de usuário logado
-                    // "Motorista" / "Passageiro"
+                    Intent i = new Intent(LoginActivity.this, PassageiroActivity.class);
+                    startActivity(i);
                     UsuarioFirebase.redirecionaUsuarioLogado(LoginActivity.this);
 
                 }else{
@@ -89,9 +87,6 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    /*public void abrirTelaMapa(View view){
-        startActivity( new Intent(this, MapsActivity.class));
-    }*/
     public  void toast(int string){
         Toast.makeText(LoginActivity.this, string, Toast.LENGTH_SHORT).show();
     }

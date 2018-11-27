@@ -67,31 +67,7 @@ public class UsuarioFirebase {
 
         FirebaseUser user = getUsuarioAtual();
         if(user != null ){
-            DatabaseReference usuariosRef = ConfiguracaoFirebase.getFirebaseDatabase()
-                    .child("usuarios")
-                    .child( getIdentificadorUsuario() );
-            usuariosRef.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
 
-                    Usuario usuario = dataSnapshot.getValue( Usuario.class );
-
-                    String tipoUsuario = usuario.getTipo();
-                    if( tipoUsuario.equals("M") ){
-                        Intent i = new Intent(activity, RequisicoesActivity.class);
-                        activity.startActivity(i);
-                    }else {
-                        Intent i = new Intent(activity, PassageiroActivity.class);
-                        activity.startActivity(i);
-                    }
-
-                }
-
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });
         }
     }
 

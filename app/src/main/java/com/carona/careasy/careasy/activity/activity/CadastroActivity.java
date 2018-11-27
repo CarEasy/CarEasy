@@ -28,7 +28,7 @@ import com.carona.careasy.careasy.activity.util.ValidaCPF;
 public class CadastroActivity extends AppCompatActivity {
 
     private TextInputEditText campoNome, campoCpf, campoEmail, campoSenha;
-    private Switch switchTipoUsuario;
+
 
     private FirebaseAuth autenticacao;
 
@@ -42,7 +42,7 @@ public class CadastroActivity extends AppCompatActivity {
         campoCpf = findViewById(R.id.editCadastroCPF);
         campoEmail = findViewById(R.id.editCadastroEmail);
         campoSenha = findViewById(R.id.editCadastroSenha);
-        switchTipoUsuario = findViewById(R.id.switchTipoUsuario);
+
     }
 
     public void validarCadastroUsuario(View view) {
@@ -66,7 +66,7 @@ public class CadastroActivity extends AppCompatActivity {
                         usuario.setCpf(textoCpf);
                         usuario.setEmail(textoEmail);
                         usuario.setSenha(textoSenha);
-                        usuario.setTipo(verificaTipoUsuario());
+
                         cadastrarUsuario(usuario);
 
                     } else {
@@ -107,14 +107,13 @@ public class CadastroActivity extends AppCompatActivity {
                         //Redireciona o usuário com base no seu tipo
                         //Se o usuário for passageiro chama a activity maps
                         //senão chama a activity requisições
-                        if (verificaTipoUsuario() != "M") {
-                            startActivity(new Intent(CadastroActivity.this, PassageiroActivity.class));
-                            usuario.setVeiculo(null);
-                            usuario.salvar();
-                            finish();
-                            toast(R.string.toast_passageiro_cadastrado);
 
-                        }
+                        startActivity(new Intent(CadastroActivity.this, PassageiroActivity.class));
+                        usuario.setVeiculo(null);
+                        usuario.salvar();
+                        finish();
+                        toast(R.string.toast_passageiro_cadastrado);
+
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -141,9 +140,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    public String verificaTipoUsuario() {
-        return switchTipoUsuario.isChecked() ? "M" : "P";
-    }
+
 
     public void toast(int string) {
         Toast.makeText(CadastroActivity.this, string, Toast.LENGTH_SHORT).show();

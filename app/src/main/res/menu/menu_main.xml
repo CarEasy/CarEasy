@@ -7,6 +7,6 @@
         app:showAsAction="never"/>
     <item
         android:id="@+id/menuCadVeiculo"
-        android:title="@string/titulo_cadastro_veiculo" />
+        android:title="@string/titulo_cadastroVeiculo" />
 
 </menu>

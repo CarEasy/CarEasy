@@ -73,7 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:onClick="chamarCarona"
-        android:text="@string/btn_carona"
+        android:text="@string/btn_buscarCarona"
         android:textStyle="bold"
         android:theme="@style/botaoPadrao" />
 

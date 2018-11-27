@@ -64,7 +64,7 @@
             android:label="@string/title_activity_maps" />
         <activity
             android:name=".activity.activity.CadastroVeiculoActivity"
-            android:label="@string/titulo_cadastro_veiculo"
+            android:label="@string/titulo_cadastroVeiculo"
             android:parentActivityName=".activity.activity.PassageiroActivity">
         </activity>
     </application>

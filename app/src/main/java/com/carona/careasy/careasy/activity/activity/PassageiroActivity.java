@@ -111,12 +111,12 @@ public class PassageiroActivity extends AppCompatActivity
                     switch (requisicao.getStatus()) {
                         case Requisicao.STATUS_AGUARDANDO:
                             linearLayoutDestino.setVisibility(View.GONE);
-                            buttonChamarCarona.setText(R.string.btn_cancelar_carona);
+                            buttonChamarCarona.setText(R.string.btn_voltar);
                             caronaChamada = true;
                             break;
                         case Requisicao.STATUS_FINALIZADA:
                             linearLayoutDestino.setVisibility(View.VISIBLE);
-                            buttonChamarCarona.setText(R.string.btn_carona);
+                            buttonChamarCarona.setText(R.string.btn_buscarCarona);
                             caronaChamada = false;
                             break;
                     }
@@ -227,7 +227,7 @@ public class PassageiroActivity extends AppCompatActivity
         requisicao.salvar();
 
         linearLayoutDestino.setVisibility(View.GONE); //Ocultar Layout...
-        buttonChamarCarona.setText(R.string.btn_cancelar_carona); // Mudar nome do Botão...
+        buttonChamarCarona.setText(R.string.btn_voltar); // Mudar nome do Botão...
     }
     private void cancelaRequisicao(){
 

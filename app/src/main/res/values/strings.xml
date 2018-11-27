@@ -5,22 +5,29 @@
     <string name="app_name">CarEasy</string>
     <string name="titulo_maps">Map</string>
     <string name="titulo_cadastro">Cadastrar uma conta</string>
-    <string name="titulo_cadastro_veiculo">Cadastrar um Veiculo</string>
+    <string name="titulo_cadastroVeiculo">Cadastrar um Veículo</string>
     <string name="titulo_login">Acessar minha conta</string>
     <string name="titulo_passageiro">Iniciar uma Carona</string>
-    <string name="titulo_motorista">Requisições</string>
+    <string name="titulo_listaCaronas">Lista de Caronas</string>
+    <string name="titulo_criarCarona">Criar Carona</string>
 
-    //Hint...
+
+
+    //Hint EditText
+    <string name="hint_my_local">Meu Local</string>
+    <string name="hint_destino">Digite seu destino</string>
+    //Hint Cadastro Usuário...
     <string name="hint_email">E-mail</string>
     <string name="hint_senha">Senha</string>
     <string name="hint_nome">Nome Completo</string>
     <string name="hint_CPF">CPF</string>
-    <string name="hint_my_local">Meu Local</string>
-    <string name="hint_destino">Digite seu destino</string>
+    <string name="hint_nascimento">Data de Nascimento</string>
+    //Hint Tela Cadastro Veículo
     <string name="hint_placa">Placa</string>
     <string name="hint_ano">Ano</string>
     <string name="hint_cor">Cor</string>
     <string name="hint_modelo">Modelo</string>
+    //Fim Hint...
 
     //Mensagem...
     <string name="msg_cidade">Cidade:</string>
@@ -30,18 +37,27 @@
     <string name="msg_cep">Cep:</string>
     <string name="msg_confirmar_enderco">Confirme seu endereço</string>
     <string name="msg_upload_foto_cnh">Enexo de foto CNH:</string>
-    <string name="msg_tipo_veiculo">Tipo de Veiculo</string>
+
 
     //AlertDialog
     <string name="confirmar">Confirmar</string>
     <string name="cancelar">Cancelar</string>
 
-    //Botões...
+    //Botões Tela Login
     <string name="btn_entrar">Entrar</string>
     <string name="btn_cadastro">Cadastro</string>
-    <string name="btn_carona">Chamar Carona</string>
-    <string name="btn_cancelar_carona">Cancelar Carona</string>
+    //Botões Tela Navigation Drawer
+    <string name="btn_minhasCaronas">Minhas Caronas</string>
+    <string name="btn_amigos">Amigos</string>
+    <string name="btn_cadastroVeiculo">Cadastro de Veículo</string>
+    <string name="btn_criarCarona">Criar Carona</string>
+    <string name="btn_atualizarPerfil">Atualizar Perfil</string>
+    <string name="btn_sair">Sair</string>
+    //Botões
+    <string name="btn_buscarCarona">Buscar Carona</string>
+    <string name="btn_voltar">Voltar</string>
     <string name="btn_cadastrar">Cadastrar</string>
+    <string name="btn_salvar">Salvar</string>
     //Itens Menu ...
     <string name="sair">Sair</string>
 
@@ -67,19 +83,18 @@
     <string name="excecao_login_invalido">E-mail e senha não correspondem a um usuário cadastrado!</string>
     <string name="title_activity_passageiro">PassageiroActivity</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
 
     //String Array
     <string-array name="spinner_tipoVeiculo" >
-        <item>Selecione</item>
+        <item>Tipo Veículo</item>
         <item>Carro</item>
         <item>Moto</item>
+    </string-array>
+
+    <string-array name="spinner_sexo" >
+        <item>Sexo</item>
+        <item>Masculino</item>
+        <item>Feminino</item>
     </string-array>
 
 </resources>
