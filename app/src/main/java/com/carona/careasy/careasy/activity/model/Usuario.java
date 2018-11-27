@@ -1,6 +1,6 @@
 package com.carona.careasy.careasy.activity.model;
 
-import android.provider.ContactsContract;
+
 
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
@@ -11,6 +11,8 @@ public class Usuario {
 
     private String id;
     private String nome;
+    private String nascimento;
+    private String sexo;
     private String email;
     private String senha;
     private String cpf;
@@ -18,6 +20,22 @@ public class Usuario {
 
     private String latitude;
     private String longitude;
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(String nascimento) {
+        this.nascimento = nascimento;
+    }
 
     public Veiculo getVeiculo() {
         return veiculo;

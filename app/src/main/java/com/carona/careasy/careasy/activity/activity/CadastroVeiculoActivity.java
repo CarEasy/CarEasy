@@ -151,8 +151,8 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
                     //Salvar imagem no firebase
                     StorageReference imagemRef = storageReference
                             .child("imagens")
-                            .child("usuarios")
-                            //.child( identificadorUsuario )
+                            .child("usuarios_CNH")
+
                             .child( identificadorUsuario+ ".jpeg");
 
                     UploadTask uploadTask = imagemRef.putBytes( dadosImagem );
