@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.carona.careasy.careasy.activity.activity.LoginActivity;
 import com.carona.careasy.careasy.activity.activity.PassageiroActivity;
 import com.carona.careasy.careasy.activity.activity.RequisicoesActivity;
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
@@ -67,6 +68,8 @@ public class UsuarioFirebase {
 
         FirebaseUser user = getUsuarioAtual();
         if(user != null ){
+            Intent i = new Intent(activity, PassageiroActivity.class);
+            activity.startActivity(i);
 
         }
     }

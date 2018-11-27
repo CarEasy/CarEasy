@@ -6,6 +6,8 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.carona.careasy.careasy.R;
@@ -23,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
 
     private TextInputEditText campoEmail, campoSenha;
     private FirebaseAuth autenticacao;
+    private ProgressBar progressBarLogin;
+    private Button buttonEntrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,8 @@ public class LoginActivity extends AppCompatActivity {
         //Inicializar componentes
         campoEmail = findViewById(R.id.editLoginEmail);
         campoSenha = findViewById(R.id.editLoginSenha);
+        progressBarLogin = findViewById(R.id.progressBarLogin);
+        buttonEntrar = findViewById(R.id.buttonEntrar);
     }
 
     public void validarLoginUsuario( View view){
@@ -45,6 +51,9 @@ public class LoginActivity extends AppCompatActivity {
                 Usuario usuario = new Usuario();
                 usuario.setEmail(textoEmail);
                 usuario.setSenha(textoSenha);
+
+                buttonEntrar.setText(null);
+                progressBarLogin.setVisibility(View.VISIBLE);
 
                 logarUsuario(usuario);
 
@@ -66,6 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 if( task.isSuccessful() ){
                     Intent i = new Intent(LoginActivity.this, PassageiroActivity.class);
                     startActivity(i);
+
                     UsuarioFirebase.redirecionaUsuarioLogado(LoginActivity.this);
 
                 }else{
