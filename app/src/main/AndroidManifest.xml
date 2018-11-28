@@ -10,8 +10,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -53,8 +53,7 @@
             android:parentActivityName=".activity.activity.MainActivity" />
         <activity
             android:name=".activity.activity.RequisicoesActivity"
-            android:label="Nomear"
-             />
+            android:label="Nomear" />
         <activity
             android:name=".activity.activity.PassageiroActivity"
             android:label="@string/title_activity_passageiro"
@@ -65,8 +64,7 @@
         <activity
             android:name=".activity.activity.CadastroVeiculoActivity"
             android:label="@string/titulo_cadastroVeiculo"
-            android:parentActivityName=".activity.activity.PassageiroActivity">
-        </activity>
+            android:parentActivityName=".activity.activity.PassageiroActivity"></activity>
     </application>
 
 </manifest>

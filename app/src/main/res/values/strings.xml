@@ -12,7 +12,6 @@
     <string name="titulo_criarCarona">Criar Carona</string>
 
 
-
     //Hint EditText
     <string name="hint_my_local">Meu Local</string>
     <string name="hint_destino">Digite seu destino</string>
@@ -85,16 +84,23 @@
     <string name="title_activity_maps">Map</string>
 
     //String Array
-    <string-array name="spinner_tipoVeiculo" >
+    <string-array name="spinner_tipoVeiculo">
         <item>Tipo Veículo</item>
         <item>Carro</item>
         <item>Moto</item>
     </string-array>
 
-    <string-array name="spinner_sexo" >
+    <string-array name="spinner_sexo">
         <item>Sexo</item>
         <item>Masculino</item>
         <item>Feminino</item>
     </string-array>
+    <string name="title_activity_menu_lateral">menu_lateral</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
