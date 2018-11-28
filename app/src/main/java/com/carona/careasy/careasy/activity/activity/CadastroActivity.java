@@ -74,9 +74,11 @@ public class CadastroActivity extends AppCompatActivity {
         campoEmail = findViewById(R.id.editCadastroEmail);
         campoSenha = findViewById(R.id.editCadastroSenha);
         spinnerSexo = findViewById(R.id.spinnerSexo);
+
         imageButtonCamera  = findViewById(R.id.imageButtonCamera);
         imageButtonGaleria = findViewById(R.id.imageButtonGaleria);
         imageViewUser = findViewById(R.id.imageViewUser);
+
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
 
 
@@ -131,7 +133,7 @@ public class CadastroActivity extends AppCompatActivity {
                 }
                 if ( imagem != null ){
 
-                    imageViewUser.setImageBitmap( imagem );
+
                     statusImagem = true;
 
                 }
@@ -144,7 +146,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void salvarFotoUsuario(Bitmap imagem, String cpf) {
-
+        imageViewUser.setImageBitmap( imagem );
         //Recuperar dados da imagem para o firebase
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         imagem.compress(Bitmap.CompressFormat.JPEG, 70, baos );
@@ -153,7 +155,7 @@ public class CadastroActivity extends AppCompatActivity {
         //Salvar imagem no firebase
         StorageReference imagemRef = storageReference
                 .child("imagens")
-                .child("usuarios")
+                .child("perfil")
                 .child( cpf+ ".jpeg");
 
         UploadTask uploadTask = imagemRef.putBytes( dadosImagem );
@@ -224,6 +226,7 @@ public class CadastroActivity extends AppCompatActivity {
                 if (!textoEmail.isEmpty()) {//verifica e-mail
                     if (!textoSenha.isEmpty()) {//verifica senha
                         //Valores a serem enviados ao Banco de Dados...
+
                         Usuario usuario = new Usuario();
                         usuario.setNome(textoNome);
                         usuario.setNascimento(textoNascimento);
@@ -231,8 +234,8 @@ public class CadastroActivity extends AppCompatActivity {
                         usuario.setCpf(textoCpf);
                         usuario.setEmail(textoEmail);
                         usuario.setSenha(textoSenha);
-                        salvarFotoUsuario(imagem, textoCpf);
-                        cadastrarUsuario(usuario);
+
+                        cadastrarUsuario(usuario, textoCpf);
 
                     } else {
                         toast(R.string.toast_senha_vazio);
@@ -249,7 +252,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
-    public void cadastrarUsuario(final Usuario usuario) {
+    public void cadastrarUsuario(final Usuario usuario, final String textoCpf) {
 
 
         autenticacao = ConfiguracaoFirebase.getFirebaseAutenticacao();
@@ -263,16 +266,13 @@ public class CadastroActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
 
                     try {
-                        String idUsuario = task.getResult().getUser().getUid();
-                        usuario.setId(idUsuario);
+
+                        salvarFotoUsuario(imagem, textoCpf);
+                        usuario.setId(textoCpf);
                         usuario.salvar();
 
                         //Atualizar nome no UserProfile
                         UsuarioFirebase.atualizarNomeUsuario(usuario.getNome());
-                        //Redireciona o usuário com base no seu tipo
-                        //Se o usuário for passageiro chama a activity maps
-                        //senão chama a activity requisições
-
                         startActivity(new Intent(CadastroActivity.this, PassageiroActivity.class));
                         usuario.setVeiculo(null);
                         usuario.salvar();
