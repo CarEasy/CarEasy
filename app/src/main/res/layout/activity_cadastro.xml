@@ -21,7 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
@@ -37,7 +36,7 @@
                     android:layout_margin="16dp"
                     android:layout_marginEnd="16dp"
                     android:contentDescription="Foto de Usuário"
-                    app:layout_constraintBottom_toTopOf="@+id/button4"
+                    app:layout_constraintBottom_toTopOf="@+id/buttonCadastrar"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="parent"
@@ -72,9 +71,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -121,6 +120,21 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/hint_CPF"
                         android:inputType="textAutoComplete|number" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="8dp">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/editCadastroTelefone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/hint_telefone"
+                        android:inputType="phone" />
+
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -150,22 +164,37 @@
 
                 </android.support.design.widget.TextInputLayout>
 
-                <Button
-                    android:id="@+id/button4"
+                <android.support.constraint.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginEnd="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:onClick="validarCadastroUsuario"
-                    android:text="@string/btn_cadastrar"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.0"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    android:layout_height="wrap_content">
+
+                    <ProgressBar
+                        android:id="@+id/progressBarCadastrar"
+                        style="@android:style/Widget.DeviceDefault.Light.ProgressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:visibility="invisible"
+                        app:layout_constraintBottom_toBottomOf="@+id/buttonCadastrar"
+                        app:layout_constraintEnd_toEndOf="@+id/buttonCadastrar"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/buttonCadastrar"
+                        app:layout_constraintVertical_bias="1.0" />
+
+                    <Button
+                        android:id="@+id/buttonCadastrar"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:onClick="validarCadastroUsuario"
+                        android:text="@string/btn_cadastrar"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
 
             </LinearLayout>
 

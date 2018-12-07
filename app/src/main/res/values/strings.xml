@@ -22,6 +22,7 @@
     <string name="hint_nome">Nome Completo</string>
     <string name="hint_CPF">CPF</string>
     <string name="hint_nascimento">Data de Nascimento</string>
+    <string name="hint_telefone">Telefone</string>
     //Hint Tela Cadastro Veículo
     <string name="hint_placa">Placa</string>
     <string name="hint_ano">Ano</string>

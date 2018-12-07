@@ -129,7 +129,7 @@
                 android:layout_margin="16dp"
                 android:layout_marginEnd="16dp"
                 android:contentDescription="TODO"
-                app:layout_constraintBottom_toTopOf="@+id/button4"
+                app:layout_constraintBottom_toTopOf="@+id/buttonCadastrar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +138,7 @@
                 app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal_background" />
 
             <Button
-                android:id="@+id/button4"
+                android:id="@+id/buttonCadastrar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"

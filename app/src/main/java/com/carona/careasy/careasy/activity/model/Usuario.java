@@ -4,7 +4,7 @@ package com.carona.careasy.careasy.activity.model;
 
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.Exclude;
+
 
 public class Usuario {
 
@@ -16,50 +16,13 @@ public class Usuario {
     private String email;
     private String senha;
     private String cpf;
+    private String telefone;
     private Veiculo veiculo;
+
 
     private String latitude;
     private String longitude;
 
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
-    public String getNascimento() {
-        return nascimento;
-    }
-
-    public void setNascimento(String nascimento) {
-        this.nascimento = nascimento;
-    }
-
-    public Veiculo getVeiculo() {
-        return veiculo;
-    }
-
-    public void setVeiculo(Veiculo veiculo) {
-        this.veiculo = veiculo;
-    }
-
-    public String getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(String latitude) {
-        this.latitude = latitude;
-    }
-
-    public String getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(String longitude) {
-        this.longitude = longitude;
-    }
 
     public Usuario() {
     }
@@ -88,6 +51,22 @@ public class Usuario {
         this.nome = nome;
     }
 
+    public String getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(String nascimento) {
+        this.nascimento = nascimento;
+    }
+
+    public String getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -96,7 +75,6 @@ public class Usuario {
         this.email = email;
     }
 
-    @Exclude
     public String getSenha() {
         return senha;
     }
@@ -113,5 +91,35 @@ public class Usuario {
         this.cpf = cpf;
     }
 
+    public String getTelefone() {
+        return telefone;
+    }
 
+    public void setTelefone(String telefone) {
+        this.telefone = telefone;
+    }
+
+    public Veiculo getVeiculo() {
+        return veiculo;
+    }
+
+    public void setVeiculo(Veiculo veiculo) {
+        this.veiculo = veiculo;
+    }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 }

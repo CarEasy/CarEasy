@@ -14,8 +14,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
@@ -45,8 +47,10 @@ import java.io.ByteArrayOutputStream;
 
 public class CadastroActivity extends AppCompatActivity {
 
-    private TextInputEditText campoNome,campoNascimento, campoCpf, campoEmail, campoSenha;
+    private TextInputEditText campoNome,campoNascimento, campoCpf, campoEmail, campoSenha, campoTelefone;
     private Spinner spinnerSexo;
+    private Button buttonCadastrar;
+    private ProgressBar progressBarCadastrar;
     private String[] permissoesNecessarias = new String[]{
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.CAMERA
@@ -71,9 +75,12 @@ public class CadastroActivity extends AppCompatActivity {
         campoNome = findViewById(R.id.editCadastroNome);
         campoNascimento = findViewById(R.id.editCadastroNascimento);
         campoCpf = findViewById(R.id.editCadastroCpf);
+        campoTelefone = findViewById(R.id.editCadastroTelefone);
         campoEmail = findViewById(R.id.editCadastroEmail);
         campoSenha = findViewById(R.id.editCadastroSenha);
         spinnerSexo = findViewById(R.id.spinnerSexo);
+        buttonCadastrar = findViewById(R.id.buttonCadastrar);
+        progressBarCadastrar = findViewById(R.id.progressBarCadastrar);
 
         imageButtonCamera  = findViewById(R.id.imageButtonCamera);
         imageButtonGaleria = findViewById(R.id.imageButtonGaleria);
@@ -178,6 +185,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     }
 
+    //Verifica de as Permissoes nescessárias foram Aceitas..
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -189,6 +197,7 @@ public class CadastroActivity extends AppCompatActivity {
         }
 
     }
+    //Solicita Permições...
     private void alertaValidacaoPermissao(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder( this );
@@ -211,31 +220,39 @@ public class CadastroActivity extends AppCompatActivity {
         //Recuperar textos dos campos
         String textoNome = campoNome.getText().toString();
         String textoNascimento = campoNascimento.getText().toString();
+        int valorNascimento = Integer.parseInt(campoNascimento.getText().toString().trim());
+        String tipoSexo = spinnerSexo.getSelectedItem().toString();
         String textoCpf = campoCpf.getText().toString();
+        String textoTelefone = campoTelefone.getText().toString();
         String textoEmail = campoEmail.getText().toString();
         String textoSenha = campoSenha.getText().toString();
-        String tipoSexo = spinnerSexo.getSelectedItem().toString();
+
 
 
         //Varialvel logica para validação de CPF.
         boolean aux = ValidaCPF.isCPF(textoCpf);
 
-        System.out.println("Variavel aux:" + aux);
+
         if (!textoNome.isEmpty()) {//verifica nome
-            if (aux) {//verifica cpf
+            if (!textoNascimento.isEmpty() && valorNascimento >= 2000) {//verifica nome
+
+
+            } else {
+                toast(R.string.toast_nome_vazio);
+            }
+
+        } else {
+            toast(R.string.toast_nome_vazio);
+        }
+
+    }
+
+    /*
+
+    if (aux) {//verifica cpf
                 if (!textoEmail.isEmpty()) {//verifica e-mail
                     if (!textoSenha.isEmpty()) {//verifica senha
                         //Valores a serem enviados ao Banco de Dados...
-
-                        Usuario usuario = new Usuario();
-                        usuario.setNome(textoNome);
-                        usuario.setNascimento(textoNascimento);
-                        usuario.setSexo(tipoSexo);
-                        usuario.setCpf(textoCpf);
-                        usuario.setEmail(textoEmail);
-                        usuario.setSenha(textoSenha);
-
-                        cadastrarUsuario(usuario, textoCpf);
 
                     } else {
                         toast(R.string.toast_senha_vazio);
@@ -246,11 +263,19 @@ public class CadastroActivity extends AppCompatActivity {
             } else {
                 toast(R.string.toast_cpf_invalido);
             }
-        } else {
-            toast(R.string.toast_nome_vazio);
-        }
 
-    }
+
+    Usuario usuario = new Usuario();
+                        usuario.setNome(textoNome);
+                        usuario.setNascimento(textoNascimento);
+                        usuario.setTelefone(textoTelefone);
+                        usuario.setSexo(tipoSexo);
+                        usuario.setCpf(textoCpf);
+                        usuario.setEmail(textoEmail);
+                        usuario.setSenha(textoSenha);
+
+                        cadastrarUsuario(usuario, textoCpf);
+     */
 
     public void cadastrarUsuario(final Usuario usuario, final String textoCpf) {
 
@@ -269,6 +294,9 @@ public class CadastroActivity extends AppCompatActivity {
 
                         salvarFotoUsuario(imagem, textoCpf);
                         usuario.setId(textoCpf);
+
+                        buttonCadastrar.setText(null);
+                        progressBarCadastrar.setVisibility(View.VISIBLE);
                         usuario.salvar();
 
                         //Atualizar nome no UserProfile
