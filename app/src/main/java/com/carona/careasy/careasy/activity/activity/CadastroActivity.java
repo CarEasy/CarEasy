@@ -19,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.carona.careasy.careasy.R;
@@ -79,7 +78,7 @@ public class CadastroActivity extends AppCompatActivity {
         campoEmail = findViewById(R.id.editCadastroEmail);
         campoSenha = findViewById(R.id.editCadastroSenha);
         spinnerSexo = findViewById(R.id.spinnerSexo);
-        buttonCadastrar = findViewById(R.id.buttonCadastrar);
+        buttonCadastrar = findViewById(R.id.buttonCadastrarVeiculo);
         progressBarCadastrar = findViewById(R.id.progressBarCadastrar);
 
         imageButtonCamera  = findViewById(R.id.imageButtonCamera);

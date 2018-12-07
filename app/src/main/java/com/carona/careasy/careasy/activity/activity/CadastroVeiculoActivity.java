@@ -14,35 +14,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.carona.careasy.careasy.R;
 
 import com.carona.careasy.careasy.activity.config.ConfiguracaoFirebase;
 import com.carona.careasy.careasy.activity.helper.UsuarioFirebase;
-import com.carona.careasy.careasy.activity.model.Requisicao;
 import com.carona.careasy.careasy.activity.model.Usuario;
 import com.carona.careasy.careasy.activity.model.Veiculo;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.carona.careasy.careasy.activity.helper.Permissoes;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class CadastroVeiculoActivity extends AppCompatActivity {
 
@@ -63,6 +56,8 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
     private DatabaseReference firebaseRef;
     private  StorageReference storageReference;
     private String identificadorUsuario;
+    private ProgressBar progressBarCadastrarVeiculo;
+    private Button buttonCadastrarVeiculo;
 
 
 
@@ -83,7 +78,8 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
         imageViewCNH = findViewById(R.id.imageViewCNH);
         spinnerTipoVeiculo = findViewById(R.id.spinnerTipoVeiculo);
         storageReference = ConfiguracaoFirebase.getFirebaseStorage();
-
+        progressBarCadastrarVeiculo = findViewById(R.id.progressBarCadastroVeiculo);
+        buttonCadastrarVeiculo = findViewById(R.id.buttonCadastrarVeiculo);
 
         //Inicializando Array Para Spinner
         ArrayAdapter adapter = ArrayAdapter.createFromResource(this,R.array.spinner_tipoVeiculo, android.R.layout.simple_spinner_item);
@@ -239,7 +235,12 @@ public class CadastroVeiculoActivity extends AppCompatActivity {
                                 veiculo.setAno(textoAno);
                                 veiculo.setPlaca(textoPlaca);
 
+                                buttonCadastrarVeiculo.setText(null);
+                                progressBarCadastrarVeiculo.setVisibility(View.VISIBLE);
                                 veiculo.salvar();
+                                toast("Solicitação enviada com Sucesso!");
+                                Intent intent = new Intent(this, PassageiroActivity.class);
+                                startActivity(intent);
 
                             } else {
                                 toast("Faltou a Foto!");
